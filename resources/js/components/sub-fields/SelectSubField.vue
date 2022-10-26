@@ -2,7 +2,7 @@
     <div>
         <select
             :name="subField.name"
-            class="w-full form-control form-select"
+            class="w-full form-control form-select form-input-bordered"
             :value="value"
             v-bind="subField.attributes"
             @change="$emit('input', $event.target.value)"
