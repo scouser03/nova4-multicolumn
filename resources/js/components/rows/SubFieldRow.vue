@@ -1,6 +1,25 @@
 <template>
-    <div class="row" :class="formLayout">
+    <div
+        class="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700"
+        :class="formLayout"
+    >
         <div class="row-inputs flex-wrap" :class="formLayout">
+            <button :disabled="field.readonly" class="row-d" type="button">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+                    />
+                </svg>
+            </button>
             <h3 v-if="field.heading && field.display_stacked" class="mb-2">
                 {{ field.heading + " #" + (index + 1) }}
             </h3>
@@ -10,11 +29,17 @@
                 :key="index"
                 :sub-field="subField"
                 class="row-input"
+                :readonly="field.readonly"
                 :value="modelValue[subField.name]"
                 @input="set(subField.name, $event)"
                 :class="getInputLayout(subField)"
             ></component>
-            <button class="row-d" type="button" @click="deleteRow">
+            <button
+                :disabled="field.readonly"
+                class="row-d"
+                type="button"
+                @click="deleteRow"
+            >
                 <Icon type="trash" />
             </button>
         </div>
@@ -53,6 +78,10 @@ export default {
             this.modelValue[name] = e.target.value;
         },
         deleteRow() {
+            if (this.field.readonly) {
+                return;
+            }
+
             this.$emit("delete-row", this.index);
         },
         getInputLayout(subField) {

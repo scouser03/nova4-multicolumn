@@ -2,7 +2,8 @@
     <div>
         <select
             :name="subField.name"
-            class="w-full form-control form-select form-input-bordered"
+            :disabled="readonly"
+            class="w-full form-control form-select form-select-bordered"
             :value="value"
             v-bind="subField.attributes"
             @change="$emit('input', $event.target.value)"
@@ -20,7 +21,7 @@
 
 <script>
 export default {
-    props: ["subField", "value"],
+    props: ["subField", "value", "readonly"],
 
     computed: {
         placeholder() {

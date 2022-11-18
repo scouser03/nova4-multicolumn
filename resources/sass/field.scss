@@ -16,7 +16,7 @@
     }
 
     &:after {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         right: -2rem;
@@ -53,12 +53,12 @@
 
     &-move {
         left: 0;
-        background: var(--primary);
+        background: blue;
     }
 
     &-delete {
         right: 0;
-        background: var(--danger);
+        background: red;
     }
 
     &-inputs {

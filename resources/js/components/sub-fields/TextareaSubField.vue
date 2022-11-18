@@ -1,6 +1,7 @@
 <template>
     <div>
         <textarea
+            :disabled="readonly"
             :name="subField.name"
             class="w-full form-control form-input form-input-bordered py-3 h-auto"
             :placeholder="subField.placeholder"
@@ -14,6 +15,6 @@
 
 <script>
 export default {
-    props: ["subField", "value"],
+    props: ["subField", "value", "readonly"],
 };
 </script>

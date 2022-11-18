@@ -2,6 +2,7 @@
     <div>
         <input
             :name="subField.name"
+            :disabled="readonly"
             type="email"
             class="w-full form-control form-input form-input-bordered"
             :value="value"
@@ -14,6 +15,6 @@
 
 <script>
 export default {
-    props: ["subField", "value"],
+    props: ["subField", "value", "readonly"],
 };
 </script>

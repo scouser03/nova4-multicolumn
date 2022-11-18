@@ -1,6 +1,7 @@
 <template>
     <div>
         <input
+            :disabled="readonly"
             :name="subField.name"
             type="text"
             class="w-full form-control form-input form-input-bordered"
@@ -14,6 +15,6 @@
 
 <script>
 export default {
-    props: ["subField", "value"],
+    props: ["subField", "value", "readonly"],
 };
 </script>

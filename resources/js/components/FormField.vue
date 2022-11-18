@@ -6,18 +6,24 @@
         :full-width-content="fullWidthContent"
     >
         <template #field>
-            <div>
-                <sub-field-row
-                    v-for="(row, index) in rows"
-                    v-model="rows[index]"
-                    :key="index"
-                    :index="index"
-                    :field="field"
-                    @delete-row="deleteRow"
-                ></sub-field-row>
-            </div>
-
+            <draggable
+                ghost-class="ghost"
+                v-model="rows"
+                item-key="index"
+                :draggable="field.readonly"
+            >
+                <template #item="{ element, index }">
+                    <sub-field-row
+                        v-model="rows[index]"
+                        :key="index"
+                        :index="index"
+                        :field="field"
+                        @delete-row="deleteRow"
+                    ></sub-field-row>
+                </template>
+            </draggable>
             <button
+                :disabled="field.readonly"
                 class="shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900"
                 @click.prevent="addNewRow"
                 v-text="addButtonText"
@@ -36,7 +42,7 @@
 <script>
 import { FormField, HandlesValidationErrors } from "laravel-nova";
 import SubFieldRow from "./rows/SubFieldRow.vue";
-// import draggable from "vuedraggable";
+import draggable from "vuedraggable";
 
 export default {
     mixins: [FormField, HandlesValidationErrors],
@@ -44,7 +50,7 @@ export default {
     props: ["resourceName", "resourceId", "field"],
 
     components: {
-        // draggable,
+        draggable,
         SubFieldRow,
     },
 
@@ -95,7 +101,7 @@ export default {
         },
 
         addNewRow() {
-            if (!this.hasReachedMaximumRows) {
+            if (!this.hasReachedMaximumRows || this.field.readonly) {
                 let newRow = this.field.sub_fields
                     .map((subField) => subField.name)
                     .reduce((o, key) => ({ ...o, [key]: null }), {});
