@@ -82,7 +82,7 @@ class Nova4Multicolumn extends Field
         }
     }
 
-    public function resolveAttribute($resource, $attribute = null)
+    public function resolveAttribute($resource, ?string $attribute = null): mixed
     {
         $value = parent::resolveAttribute($resource, $attribute);
 
